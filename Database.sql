@@ -73,17 +73,18 @@ INSERT INTO Biglietto (Id_biglietto, Tipo, Prezzo) VALUES
 ('H28LwzbF2CTQgC2', 'Adulti', 20.00);
 
 CREATE TABLE Parcheggio(
-Id_parcheggio VARCHAR(15) PRIMARY KEY,
+Id_parcheggio VARCHAR(15),
 Categoria VARCHAR(10) NOT NULL,
-Prezzo DECIMAL(2,2)
+Prezzo DECIMAL(2,2),
+PRIMARY KEY (Id_parcheggio, Categoria)
 );
 
 INSERT INTO Parcheggio (Id_parcheggio, Categoria, Prezzo) VALUES
 ('P1', 'Motocicli', 2.00),
 ('P2', 'Automobili', 4.00),
 ('P2', 'Camper', 5.00),
-('P3', 'Autobus'),
-('P3', 'Disabili');
+('P3', 'Autobus', NULL),
+('P3', 'Disabili', NULL);
 
 CREATE TABLE TipoDipendenti(
 Id_dipendente VARCHAR(20) PRIMARY KEY,
@@ -115,7 +116,7 @@ Salario DECIMAL(4,2) UNSIGNED,
 FOREIGN KEY(Id_dipendente) REFERENCES TipoDipendenti(Id_dipendente)
 );
 
-INSERT INTO TipoDipendenti (Id_dipendente, Nome, Cognome, DataAssunzione, Salario) VALUES
+INSERT INTO Dipendenti (Id_dipendente, Nome, Cognome, DataAssunzione, Salario) VALUES
 ('oN95g4zNlVdHpdPU6TWa', 'Mario', 'Lamborghini', NULL, 4000),
 ('CmqYEkmd0qZyc1fnbt7X', 'Concetta', 'Leone', '2017-07-21', 2200),
 ('s2zeyv1pnEkcyMTNmthD', 'Pasquale', 'Esposito', '2009-05-27', 2200),
@@ -128,8 +129,8 @@ INSERT INTO TipoDipendenti (Id_dipendente, Nome, Cognome, DataAssunzione, Salari
 ('QMXo7PWOVHMkDPj5FCyL', 'Ciro', 'De Angelis', '2008-02-15', 1400),
 ('k8uHwzVFKOgbN7vOGuO8', 'Anna', 'Grimaldi', '2012-09-06', 1400),
 ('dFOhOyxEYpHFFVspe2DK', 'Antonio', 'Orlando', '2011-03-01', 1100),
-('eJeeLcw4SXKFjVHv18VR', 'Luigi', 'Barbieri'),
-('qCQ4nSmRGuvQ6YHq79BU', 'Aurelio', 'Cosentino');
+('eJeeLcw4SXKFjVHv18VR', 'Luigi', 'Barbieri', NULL, NULL),
+('qCQ4nSmRGuvQ6YHq79BU', 'Aurelio', 'Cosentino', NULL, NULL);
 
 CREATE TABLE Area(
 Id_area INTEGER(2) PRIMARY KEY,
@@ -184,7 +185,7 @@ INSERT INTO NegozioSouvenir (Id_merce, Quantita) VALUES
 ('uQQMbQ67VE', 28),
 ('bG9S9RPgFb', 37),
 ('J4XsbIpinC', 68),
-('0MrCMks8T9'),
+('0MrCMks8T9', NULL),
 ('J4DzcwrMdW', 20),
 ('mKrzcSvTWk', 31),
 ('hOgorqUmUs', 24),
@@ -194,7 +195,7 @@ INSERT INTO NegozioSouvenir (Id_merce, Quantita) VALUES
 ('i5JbdlAqGO', 200),
 ('578JFaG5eI', 160);
 
-CREATE TABLE Merce(
+CREATE TABLE Merce (
 Id_merce VARCHAR(10) PRIMARY KEY,
 Prezzo DECIMAL(2,2) NOT NULL,
 Tipo VARCHAR (20) NOT NULL
