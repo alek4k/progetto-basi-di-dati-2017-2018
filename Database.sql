@@ -20,7 +20,7 @@ CAP INTEGER(10) NOT NULL
 );
 
 INSERT INTO Zoo (Telefono, Email, Citta, Via, CAP) VALUES
-(0498844217, 'info@tropicalzoo.it', 'Napoli', 'Via Brombeis 10', '80121');
+(0498844217, 'info@tropicalzoo.it', 'Napoli', 'Via Giovanni Brombeis 10', '80135');
 
 CREATE TABLE Orario(
 Giorno VARCHAR(10) NOT NULL,
