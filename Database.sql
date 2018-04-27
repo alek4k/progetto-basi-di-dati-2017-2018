@@ -215,5 +215,3 @@ INSERT INTO Merce (Id_merce, Prezzo, Tipo) VALUES
 ('ucnzo5hWst', 15.50, 'libro'),
 ('i5JbdlAqGO', 1.50, 'matita'),
 ('578JFaG5eI', 2.50, 'penna');
-
-
