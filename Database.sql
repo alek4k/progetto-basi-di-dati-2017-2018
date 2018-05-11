@@ -146,33 +146,65 @@ INSERT INTO Area (Id_area, Nome) VALUES
 (6, 'America'),
 (7, 'Borealia'),
 (8, 'Rettilario'),
-(9, 'Amazzonia'),
-(10, 'Chelonia'),
-(11, 'Extinction Park');
+(9, 'Amazzonia');
 
 CREATE TABLE Gabbia(
 Id_gabbia VARCHAR(15) PRIMARY KEY,
 Id_area INTEGER(2) NOT NULL,
-Id_animale VARCHAR(15) NOT NULL,
+Id_animale VARCHAR(10) NOT NULL,
 Giorno_pulizia DATE NOT NULL,
 FOREIGN KEY (Id_area) REFERENCES Area(Id_area),
 FOREIGN KEY (Id_animale) REFERENCES Animale(Id_animale)
 );
 
 CREATE TABLE Animale(
-Id_animale VARCHAR(15) PRIMARY KEY,
+Id_animale VARCHAR(10) PRIMARY KEY,
 Id_area VARCHAR(15) NOT NULL,
 Id_gabbia VARCHAR(15) NOT NULL,
-Genere VARCHAR(30) NOT NULL,
-Specie VARCHAR(40) NOT NULL,
+Nome_comune VARCHAR(40) NOT NULL,
+Nome_scientifico VARCHAR(40) NOT NULL,
+Classe VARCHAR(20) NOT NULL,
+Ordine VARCHAR(20) NOT NULL,
+Famiglia VARCHAR(20) NOT NULL,
 Sesso VARCHAR(1) NOT NULL,
 Eta INTEGER(3) NOT NULL,
-Origine VARCHAR(30) NOT NULL,
 Data_arrivo DATE,
 Data_nascita DATE,
 FOREIGN KEY (Id_gabbia) REFERENCES Gabbia(Id_gabbia),
 FOREIGN KEY (Id_area) REFERENCES Area(Id_area)
 );
+
+INSERT INTO Animale (Id_animale, Id_area, Id_gabbia, Nome_comune, Nome_scientifico, Classe, Ordine, Famiglia, Sesso, Eta, Data_arrivo, Data_nascita) VALUES
+  ('HdTiQWoA9W', 4, NULL, 'Ghepardo', 'Acinonyx jubatus', 'Mammiferi ', 'Carnivori', 'Felidi', 'M', 10, '2009-01-04', NULL),
+  ('MHJsAQyjgG', 4, NULL, 'Leone', 'Panthera Leo', 'Mammiferi', 'Carnivori', 'Felidi', 'F', 8, '2013-04-18', NULL),
+  ('kX5i77fSzA', 4, NULL, 'Suricata', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'F', 6, NULL, '2012-08-14'),
+  ('MIcfKnp4jw', 4, NULL, 'Sitatunga', 'Tragelaphus spekii', 'Mammiferi', 'Cetartiodattili', 'Bovidi', 'F', 7, '2015-09-24', NULL),
+  ('SFSUCvPTVr', 4, NULL, 'Ippopotamo', 'Hippopotamus amphibius', 'Mammiferi', 'Cetartiodattili', 'Ippopotamidi', 'M', 25, '2008-10-07', NULL),
+  ('84Y5MnUCTq', 5, NULL, 'Avvoltoio reale indiano', 'Sarcogyps calvus', 'Uccelli', 'Falconiformi', 'Accipitridi', 'F', 8, '2013-07-02', NULL),
+  ('2ctKyYVXlI', 5, NULL, 'Cicogna nera', 'Ciconia nigra', 'Uccelli', 'Ciconiformi', 'Ciconidi', 'M', 3, '2016-09-18', NULL),
+  ('hpMwkJvIve', 5, NULL, 'Tigre siberiana', 'Panthera tigris altaica', 'Mammiferi', 'Carnivori', 'Felidi', 'M', 5, '2016-12-27', NULL),
+  ('3PJZtjcCJt', 5, NULL, 'Panda minore', 'Ailurus fulgens', 'Mammiferi', 'Carnivori', 'Ailuridi', 'F', 3, NULL, '2015-09-28'),
+  ('irO3Vltmml', 6, NULL, 'Tamarino imperatore', 'Saguinus imperator', 'Mammiferi', 'Primati', 'Callitricidi', 'M', 5, '2014-04-22', NULL),
+  ('jtFscxRO5t', 6, NULL, 'Bradipo bidattilo', 'Choloepus didactylus', 'Mammiferi', 'Pelosi', 'Megalonichidi', 'F', 9, '2014-06-04', NULL),
+  ('PH8ZfieJDX', 6, NULL, 'Ocelot', 'Leopardus pardalis', 'Mammiferi', 'Carnivori', 'Felidi', 'M', 3, NULL, '2015-05-21'),
+  ('vV3FcbzsLg', 6, NULL, 'Saki dalla faccia bianca', 'Pithecia pithecia', 'Mammiferi', 'Primati', 'Pitecidi', 'F', 5, '2016-04-28', NULL),
+  ('R753WCRVgU', 7, NULL, 'Gufo delle nevi', 'Bubo scandiaca', 'Uccelli', 'Strigiformi', 'Strigidi', 'F', 8, '2011-08-16', NULL),
+  ('F3qhgwfr10', 7, NULL, 'Renna', 'Rangifer tarandus', 'Mammiferi', 'Cetartiodattili', 'Cervidi', 'M', 14, '2008-07-08', NULL),
+  ('GzXDREfWga', 1, NULL, 'Fenicottero rosa', 'Phoenicopterus roseus', 'Uccelli', 'Fenicotteriformi', 'Fenicotteridi', 'M', 4, '2015-04-20', NULL),
+  ('I3VA0OxptO', 1, NULL, 'Lupo', 'Canis lupus', 'Mammiferi', 'Carnivori', 'Canidi', 'M', 9, '2011-01-24', NULL),
+  ('DclNtLzG7e', 1, NULL, 'Ibis eremita', 'Geronticus eremita', 'Uccelli', 'Ciconiformi', 'Treskionitidi', 'F', 5, '2015-04-20', NULL),
+  ('0sOzX0NdSz', 1, NULL, 'Bisonte europeo', 'Bison bonasus', 'Mammiferi', 'Cetartiodattili', 'Bovidi', 'F', 12, '2016-12-26', NULL),
+  ('AJbJGeeEDR', 8, NULL, 'Gerrosauro maggiore', 'Gerrhosaurus major', 'Rettili', 'Squamati', 'Gerrhosauridae', 'M', 1, NULL, '2018-01-29'),
+  ('rs7Fq26XFs', 8, NULL, 'Pitone reale', 'Phyton regius', 'Rettili', 'Squamati', 'Phytonidae', 'F', 10, '2010-08-06', NULL),
+  ('Gkr0sTJObZ', 8, NULL, 'Anaconda giallo', 'Rangifer tarandus', 'Rettili', 'Squamati', 'Boidi', 'M', 12, '2008-07-08', NULL),
+  ('5Jv2qjqfCw', 2, NULL, 'Lemure catta', 'Lemur catta', 'Mammiferi', 'Primati', 'Lemuridi', 'M', 6, '2013-10-21', NULL),
+  ('dRa5fddNaf', 2, NULL, 'Vasa Maggiore', 'Cryptoprocta ferox', 'Uccelli', 'Psittaciformi', 'Psittacidi', 'F', 5, '2014-08-06', NULL),
+  ('BfK4NUmdHs', 2, NULL, 'Fossa', 'Rangifer tarandus', 'Mammiferi', 'Carnivori', 'Eupleridi', 'M', 4, '2016-08-25', NULL),
+  ('cJNP4BnoRo', 3, NULL, 'Wallaby dal collo rosso', 'Macropus rufogriseus', 'Mammiferi', 'Diprotodonti', 'Macropodidi', 'F', 8, '2017-01-16', NULL),
+  ('axqHPe6ocq', 3, NULL, 'Emù', 'Dromaius novaehollandiae', 'Uccelli', 'Struzioniformi', 'Dromaidi', 'F', 5, '2014-07-08', NULL),
+  ('UNjwm0Wygt', 3, NULL, 'Gru antigone', 'Grus antigone', 'Uccelli', 'Gruiformi', 'Gruidi', 'F', 3, '2018-02-27', NULL),
+  ('l81E5IQy3x', 3, NULL, 'Casuario', 'Casuarius casuarius', 'Uccelli', 'Struzioniformi', 'Casuaridi', 'M', 3, '2017-01-16', NULL),
+  ('J3O8iLozhO', 9, NULL, 'Ara ali verdi', 'Ara chloropterus', 'Uccelli', 'Psittaciformi', 'Psittacidi', 'M', 2, NULL, '2016-07-27');
 
 CREATE TABLE NegozioSouvenir(
 Id_merce VARCHAR(10) NOT NULL,
