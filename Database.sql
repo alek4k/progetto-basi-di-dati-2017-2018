@@ -1,3 +1,17 @@
+/*
+  ***************************************************
+  *  PROGETTO BASI DI DATI "TropicalZoo"            *
+  ***************************************************
+  *  Anno 2017-2018                                 *
+  *  Università degli Studi di Padova               *
+  *  Laurea in Informatica                          *
+  ***************************************************
+  *  Alessandro Lovo                                *
+  *  Amedeo Meggiolaro                              *
+  ***************************************************
+ */
+
+-- Rimozione tabelle (se presenti)
 SET FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS Zoo;
@@ -12,6 +26,9 @@ DROP TABLE IF EXISTS Animale;
 DROP TABLE IF EXISTS Merce;
 DROP TABLE IF EXISTS NegozioSouvenir;
 
+DELIMITER ;
+
+-- Creazione e popolamento tabella Zoo
 CREATE TABLE Zoo (
   Telefono INTEGER(10) NOT NULL,
   Email    VARCHAR(40) NOT NULL,
@@ -23,6 +40,7 @@ CREATE TABLE Zoo (
 INSERT INTO Zoo (Telefono, Email, Citta, Via, CAP) VALUES
   (0498844217, 'info@tropicalzoo.it', 'Napoli', 'Via Giovanni Brombeis 10', '80135');
 
+-- Creazione e popolamento tabella Orario
 CREATE TABLE Orario (
   Giorno   VARCHAR(10) NOT NULL,
   Apertura TIME,
@@ -38,6 +56,7 @@ INSERT INTO Orario (Giorno, Apertura, Chiusura) VALUES
   ('Sabato', '9:00', '18:00'),
   ('Domenica', '9:00', '19:00');
 
+-- Creazione e popolamento tabella Biglietto
 CREATE TABLE Biglietto (
   Id_biglietto VARCHAR(15) PRIMARY KEY,
   Tipo         VARCHAR(10)   NOT NULL,
@@ -56,6 +75,7 @@ INSERT INTO Biglietto (Id_biglietto, Tipo, Prezzo) VALUES
   ('AgldIAZrTbEQfuW', 'Ragazzo', 15.00),
   ('H28LwzbF2CTQgC2', 'Adulti', 20.00);
 
+-- Creazione e popolamento tabella Visitatore
 CREATE TABLE Visitatore (
   Id_visitatore VARCHAR(15),
   FOREIGN KEY (Id_visitatore) REFERENCES Biglietto (Id_biglietto)
@@ -73,6 +93,7 @@ INSERT INTO Visitatore (Id_visitatore) VALUES
   ('AgldIAZrTbEQfuW'),
   ('H28LwzbF2CTQgC2');
 
+-- Creazione e popolamento tabella Parcheggio
 CREATE TABLE Parcheggio (
   Id_parcheggio VARCHAR(15),
   Categoria     VARCHAR(10) NOT NULL,
@@ -87,7 +108,7 @@ INSERT INTO Parcheggio (Id_parcheggio, Categoria, Prezzo) VALUES
   ('P3', 'Autobus', NULL),
   ('P3', 'Disabili', NULL);
 
-
+-- Creazione e popolamento tabella Dipendenti
 CREATE TABLE Dipendenti (
   Id_dipendente  VARCHAR(20) PRIMARY KEY,
   Descrizione    ENUM ('Direttore', 'Keeper', 'Veterinario', 'Cassiere', 'Mascotte', 'Ricercatore') NOT NULL,
@@ -113,6 +134,7 @@ INSERT INTO Dipendenti (Id_dipendente, Descrizione, Nome, Cognome, DataAssunzion
   ('eJeeLcw4SXKFjVHv18VR', 'Ricercatore', 'Luigi', 'Barbieri', NULL, NULL),
   ('qCQ4nSmRGuvQ6YHq79BU', 'Ricercatore', 'Aurelio', 'Cosentino', NULL, NULL);
 
+-- Creazione e popolamento tabella Area
 CREATE TABLE Area (
   Id_area INTEGER(2) PRIMARY KEY,
   Nome    ENUM ('Europa', 'Madagascar', 'Oceania', 'Africa', 'Asia', 'America', 'Borealia', 'Rettilario', 'Amazzonia') NOT NULL
@@ -129,6 +151,7 @@ INSERT INTO Area (Id_area, Nome) VALUES
   (8, 'Rettilario'),
   (9, 'Amazzonia');
 
+-- Creazione e popolamento tabella Gabbia
 CREATE TABLE Gabbia (
   Id_gabbia      VARCHAR(2) PRIMARY KEY,
   Id_area        INTEGER(2)  NOT NULL,
@@ -169,7 +192,7 @@ INSERT INTO Gabbia (Id_gabbia, Id_area, Giorno_pulizia) VALUES
   (29, 3, 'Sabato'),
   (30, 9, 'Sabato');
 
-
+-- Creazione e popolamento tabella Animale
 CREATE TABLE Animale (
   Id_animale       VARCHAR(10) PRIMARY KEY,
   Id_gabbia        VARCHAR(15) NOT NULL,
@@ -232,6 +255,7 @@ VALUES
   ('J3O8iLozhO', 30, 'Ara ali verdi', 'Ara chloropterus', 'Uccelli', 'Psittaciformi', 'Psittacidi', 'M', 2, NULL,
     '2016-07-27');
 
+-- Creazione e popolamento tabella Merce
 CREATE TABLE Merce (
   Id_merce VARCHAR(10) PRIMARY KEY,
   Prezzo   DECIMAL(4, 2) NOT NULL,
@@ -253,6 +277,7 @@ INSERT INTO Merce (Id_merce, Prezzo, Tipo) VALUES
   ('i5JbdlAqGO', 1.50, 'matita'),
   ('578JFaG5eI', 2.50, 'penna');
 
+-- Creazione e popolamento tabella NegozioSouvenir
 CREATE TABLE NegozioSouvenir (
   Id_merce VARCHAR(10) NOT NULL,
   Quantita INTEGER(3),
