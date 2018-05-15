@@ -1,14 +1,16 @@
+SET FOREIGN_KEY_CHECKS=0;
+
 DROP TABLE IF EXISTS Zoo;
 DROP TABLE IF EXISTS Orario;
-DROP TABLE IF EXISTS Visitatore;
 DROP TABLE IF EXISTS Biglietto;
+DROP TABLE IF EXISTS Visitatore;
 DROP TABLE IF EXISTS Parcheggio;
 DROP TABLE IF EXISTS Dipendenti;
 DROP TABLE IF EXISTS Area;
 DROP TABLE IF EXISTS Gabbia;
 DROP TABLE IF EXISTS Animale;
-DROP TABLE IF EXISTS NegozioSouvenir;
 DROP TABLE IF EXISTS Merce;
+DROP TABLE IF EXISTS NegozioSouvenir;
 
 CREATE TABLE Zoo (
   Telefono INTEGER(10) NOT NULL,
@@ -39,7 +41,7 @@ INSERT INTO Orario (Giorno, Apertura, Chiusura) VALUES
 CREATE TABLE Biglietto (
   Id_biglietto VARCHAR(15) PRIMARY KEY,
   Tipo         VARCHAR(10)   NOT NULL,
-  Prezzo       DECIMAL(3, 2) NOT NULL
+  Prezzo       DECIMAL(5, 2) NOT NULL
 );
 
 INSERT INTO Biglietto (Id_biglietto, Tipo, Prezzo) VALUES
@@ -74,7 +76,7 @@ INSERT INTO Visitatore (Id_visitatore) VALUES
 CREATE TABLE Parcheggio (
   Id_parcheggio VARCHAR(15),
   Categoria     VARCHAR(10) NOT NULL,
-  Prezzo        DECIMAL(2, 2),
+  Prezzo        DECIMAL(4, 2),
   PRIMARY KEY (Id_parcheggio, Categoria)
 );
 
@@ -92,7 +94,7 @@ CREATE TABLE Dipendenti (
   Nome           VARCHAR(30)                                                                        NOT NULL,
   Cognome        VARCHAR(30)                                                                        NOT NULL,
   DataAssunzione DATE,
-  Salario        DECIMAL(4, 2) UNSIGNED
+  Salario        DECIMAL(6, 2) UNSIGNED
 );
 
 INSERT INTO Dipendenti (Id_dipendente, Descrizione, Nome, Cognome, DataAssunzione, Salario) VALUES
@@ -232,7 +234,7 @@ VALUES
 
 CREATE TABLE Merce (
   Id_merce VARCHAR(10) PRIMARY KEY,
-  Prezzo   DECIMAL(2, 2) NOT NULL,
+  Prezzo   DECIMAL(4, 2) NOT NULL,
   Tipo     VARCHAR(20)   NOT NULL
 );
 
