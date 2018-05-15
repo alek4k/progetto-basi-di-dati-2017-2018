@@ -12,7 +12,7 @@
  */
 
 -- Rimozione tabelle (se presenti)
-SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS Zoo;
 DROP TABLE IF EXISTS Orario;
@@ -212,9 +212,10 @@ INSERT INTO Animale (Id_animale, Id_gabbia, Nome_comune, Nome_scientifico, Class
 VALUES
   ('HdTiQWoA9W', 1, 'Ghepardo', 'Acinonyx jubatus', 'Mammiferi ', 'Carnivori', 'Felidi', 'M', 10, '2009-01-04', NULL),
   ('MHJsAQyjgG', 2, 'Leone', 'Panthera Leo', 'Mammiferi', 'Carnivori', 'Felidi', 'F', 8, '2013-04-18', NULL),
-  ('WbLcpsGLaf', 3, 'Suricata', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'F', 6, '2013-03-06', NULL),
-  ('eDTtjdNin5', 3, 'Suricata', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'M', 7, '2014-01-06', NULL),
-  ('kX5i77fSzA', 3, 'Suricata', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'F', 4, NULL, '2014-08-14'),
+  ('WbLcpsGLaf', 3, 'Suricato', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'F', 6, '2013-03-06', NULL),
+  ('eDTtjdNin5', 3, 'Suricato', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'M', 7, '2014-01-06', NULL),
+  ('kX5i77fSzA', 3, 'Suricato', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'F', 4, NULL, '2014-08-14'),
+  ('HPIXIo1wks', 3, 'Suricato', 'Suricata suricatta', 'Mammiferi', 'Carnivori', 'Erpestidi', 'M', 4, NULL, '2014-08-14'),
   ('MIcfKnp4jw', 4, 'Sitatunga', 'Tragelaphus spekii', 'Mammiferi', 'Cetartiodattili', 'Bovidi', 'F', 7, '2015-09-24', NULL),
   ('SFSUCvPTVr', 5, 'Ippopotamo', 'Hippopotamus amphibius', 'Mammiferi', 'Cetartiodattili', 'Ippopotamidi', 'M', 25, '2008-10-07', NULL),
   ('84Y5MnUCTq', 6, 'Avvoltoio reale indiano', 'Sarcogyps calvus', 'Uccelli', 'Falconiformi', 'Accipitridi', 'F', 8, '2013-07-02', NULL),
