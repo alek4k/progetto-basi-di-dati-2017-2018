@@ -93,32 +93,17 @@ INSERT INTO Visitatore (Id_visitatore) VALUES
   ('AgldIAZrTbEQfuW'),
   ('H28LwzbF2CTQgC2');
 
--- Creazione e popolamento tabella Parcheggio
-CREATE TABLE Parcheggio (
-  Id_parcheggio VARCHAR(15),
-  Categoria     VARCHAR(10) NOT NULL,
-  Prezzo        DECIMAL(4, 2),
-  PRIMARY KEY (Id_parcheggio, Categoria)
-);
-
-INSERT INTO Parcheggio (Id_parcheggio, Categoria, Prezzo) VALUES
-  ('P1', 'Motocicli', 2.00),
-  ('P2', 'Automobili', 4.00),
-  ('P2', 'Camper', 5.00),
-  ('P3', 'Autobus', NULL),
-  ('P3', 'Disabili', NULL);
-
 -- Creazione e popolamento tabella Dipendenti
 CREATE TABLE Dipendenti (
   Id_dipendente  VARCHAR(20) PRIMARY KEY,
   Descrizione    ENUM ('Direttore', 'Keeper', 'Veterinario', 'Cassiere', 'Mascotte', 'Ricercatore') NOT NULL,
   Nome           VARCHAR(30)                                                                        NOT NULL,
   Cognome        VARCHAR(30)                                                                        NOT NULL,
-  DataAssunzione DATE,
+  Data_assunzione DATE,
   Salario        DECIMAL(6, 2) UNSIGNED
 );
 
-INSERT INTO Dipendenti (Id_dipendente, Descrizione, Nome, Cognome, DataAssunzione, Salario) VALUES
+INSERT INTO Dipendenti (Id_dipendente, Descrizione, Nome, Cognome, Data_assunzione, Salario) VALUES
   ('oN95g4zNlVdHpdPU6TWa', 'Direttore', 'Mario', 'Lamborghini', NULL, 4000),
   ('CmqYEkmd0qZyc1fnbt7X', 'Keeper', 'Concetta', 'Leone', '2017-07-21', 2200),
   ('s2zeyv1pnEkcyMTNmthD', 'Keeper', 'Pasquale', 'Esposito', '2009-05-27', 2200),
@@ -153,7 +138,7 @@ INSERT INTO Area (Id_area, Nome) VALUES
 
 -- Creazione e popolamento tabella Gabbia
 CREATE TABLE Gabbia (
-  Id_gabbia      VARCHAR(2) PRIMARY KEY,
+  Id_gabbia      INTEGER(2) PRIMARY KEY,
   Id_area        INTEGER(2)  NOT NULL,
   Id_animale     VARCHAR(10) NOT NULL,
   Giorno_pulizia VARCHAR(10) NOT NULL,
