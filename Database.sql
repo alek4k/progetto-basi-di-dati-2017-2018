@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS Dipendenti;
 DROP TABLE IF EXISTS Area;
 DROP TABLE IF EXISTS Gabbia;
 DROP TABLE IF EXISTS Animale;
+DROP TABLE IF EXISTS ControlloMedico;
 DROP TABLE IF EXISTS Merce;
 DROP TABLE IF EXISTS NegozioSouvenir;
 
@@ -56,54 +57,48 @@ INSERT INTO Orario (Giorno, Apertura, Chiusura) VALUES
   ('Sabato', '9:00', '18:00'),
   ('Domenica', '9:00', '19:00');
 
+CREATE TABLE Tipologia_biglietto (
+  Nome   VARCHAR(10) PRIMARY KEY,
+  Prezzo DECIMAL(5, 2) NOT NULL
+);
+
+INSERT INTO Tipologia_biglietto (Nome, Prezzo) VALUES
+  ('Baby', 3.00),
+  ('Ragazzo', 15.00),
+  ('Adulto', 20.00),
+  ('Senior', 18.00);
+
 -- Creazione e popolamento tabella Biglietto
 CREATE TABLE Biglietto (
   Id_biglietto VARCHAR(15) PRIMARY KEY,
-  Tipo         VARCHAR(10)   NOT NULL,
-  Prezzo       DECIMAL(5, 2) NOT NULL
+  Tipologia    VARCHAR(10) NOT NULL,
+  Giorno       DATE        NOT NULL,
+  FOREIGN KEY (Tipologia) REFERENCES Tipologia_biglietto (Nome)
 );
 
-INSERT INTO Biglietto (Id_biglietto, Tipo, Prezzo) VALUES
-  ('Ri17c0NP2CvbSeR', 'Baby', 3.00),
-  ('hB7zHgcbWYD4Oht', 'Ragazzo', 15.00),
-  ('ToUc7S0wUu0d5xs', 'Senior', 18.00),
-  ('NHZSfAKvtpsyRXH', 'Adulti', 20.00),
-  ('M9YwZ5B5ZbK2OKo', 'Ragazzo', 15.00),
-  ('NoPgTCJyd4isueq', 'Baby', 3.00),
-  ('gAlaV138wek4mFN', 'Ragazzo', 15.00),
-  ('vOPm5vqoNj2PXha', 'Senior', 18.00),
-  ('AgldIAZrTbEQfuW', 'Ragazzo', 15.00),
-  ('H28LwzbF2CTQgC2', 'Adulti', 20.00);
-
--- Creazione e popolamento tabella Visitatore
-CREATE TABLE Visitatore (
-  Id_visitatore VARCHAR(15),
-  FOREIGN KEY (Id_visitatore) REFERENCES Biglietto (Id_biglietto)
-);
-
-INSERT INTO Visitatore (Id_visitatore) VALUES
-  ('Ri17c0NP2CvbSeR'),
-  ('hB7zHgcbWYD4Oht'),
-  ('ToUc7S0wUu0d5xs'),
-  ('NHZSfAKvtpsyRXH'),
-  ('M9YwZ5B5ZbK2OKo'),
-  ('NoPgTCJyd4isueq'),
-  ('gAlaV138wek4mFN'),
-  ('vOPm5vqoNj2PXha'),
-  ('AgldIAZrTbEQfuW'),
-  ('H28LwzbF2CTQgC2');
+INSERT INTO Biglietto (Id_biglietto, Tipologia, Giorno) VALUES
+  ('Ri17c0NP2CvbSeR', 'Baby', '2018-06-01'),
+  ('hB7zH gcbWYD4Oht', 'Ragazzo', '2018-06-01'),
+  ('ToUc7S0wUu0d5xs', 'Senior', '2018-06-01'),
+  ('NHZSfAKvtpsyRXH', 'Adulto', '2018-06-01'),
+  ('M9YwZ5B5ZbK2OKo', 'Ragazzo', '2018-06-01'),
+  ('NoPgTCJyd4isueq', 'Baby', '2018-06-01'),
+  ('gAlaV138wek4mFN', 'Ragazzo', '2018-06-01'),
+  ('vOPm5vqoNj2PXha', 'Senior', '2018-06-01'),
+  ('AgldIAZrTbEQfuW', 'Ragazzo', '2018-06-01'),
+  ('H28LwzbF2CTQgC2', 'Adulto', '2018-06-01');
 
 -- Creazione e popolamento tabella Dipendenti
 CREATE TABLE Dipendenti (
-  Id_dipendente  VARCHAR(20) PRIMARY KEY,
-  Descrizione    ENUM ('Direttore', 'Keeper', 'Veterinario', 'Cassiere', 'Mascotte', 'Ricercatore') NOT NULL,
-  Nome           VARCHAR(30)                                                                        NOT NULL,
-  Cognome        VARCHAR(30)                                                                        NOT NULL,
+  Id_dipendente   VARCHAR(20) PRIMARY KEY,
+  Impiego         ENUM ('Direttore', 'Keeper', 'Veterinario', 'Cassiere', 'Mascotte', 'Ricercatore') NOT NULL,
+  Nome            VARCHAR(30)                                                                        NOT NULL,
+  Cognome         VARCHAR(30)                                                                        NOT NULL,
   Data_assunzione DATE,
-  Salario        DECIMAL(6, 2) UNSIGNED
+  Salario         DECIMAL(6, 2) UNSIGNED
 );
 
-INSERT INTO Dipendenti (Id_dipendente, Descrizione, Nome, Cognome, Data_assunzione, Salario) VALUES
+INSERT INTO Dipendenti (Id_dipendente, Impiego, Nome, Cognome, Data_assunzione, Salario) VALUES
   ('oN95g4zNlVdHpdPU6TWa', 'Direttore', 'Mario', 'Lamborghini', NULL, 4000),
   ('CmqYEkmd0qZyc1fnbt7X', 'Keeper', 'Concetta', 'Leone', '2017-07-21', 2200),
   ('s2zeyv1pnEkcyMTNmthD', 'Keeper', 'Pasquale', 'Esposito', '2009-05-27', 2200),
@@ -142,58 +137,59 @@ CREATE TABLE Gabbia (
   Id_area        INTEGER(2)  NOT NULL,
   Id_animale     VARCHAR(10) NOT NULL,
   Giorno_pulizia VARCHAR(10) NOT NULL,
+  Capienza       INTEGER(2)  NOT NULL,
   FOREIGN KEY (Id_area) REFERENCES Area (Id_area)
 );
 
-INSERT INTO Gabbia (Id_gabbia, Id_area, Giorno_pulizia) VALUES
-  (1, 4, 'Lunedì'),
-  (2, 4, 'Lunedì'),
-  (3, 4, 'Lunedì'),
-  (4, 4, 'Lunedì'),
-  (5, 4, 'Lunedì'),
-  (6, 5, 'Martedì'),
-  (7, 5, 'Martedì'),
-  (8, 5, 'Martedì'),
-  (9, 5, 'Martedì'),
-  (10, 6, 'Mercoledì'),
-  (11, 6, 'Mercoledì'),
-  (12, 6, 'Mercoledì'),
-  (13, 6, 'Mercoledì'),
-  (14, 7, 'Giovedì'),
-  (15, 7, 'Giovedì'),
-  (16, 1, 'Giovedì'),
-  (17, 1, 'Giovedì'),
-  (18, 1, 'Giovedì'),
-  (19, 1, 'Giovedì'),
-  (20, 8, 'Venerdì'),
-  (21, 8, 'Venerdì'),
-  (22, 8, 'Venerdì'),
-  (23, 2, 'Venerdì'),
-  (24, 2, 'Venerdì'),
-  (25, 2, 'Venerdì'),
-  (26, 3, 'Sabato'),
-  (27, 3, 'Sabato'),
-  (28, 3, 'Sabato'),
-  (29, 3, 'Sabato'),
-  (30, 9, 'Sabato');
+INSERT INTO Gabbia (Id_gabbia, Id_area, Giorno_pulizia, Capienza) VALUES
+  (1, 4, 'Lunedì', 6),
+  (2, 4, 'Lunedì', 8),
+  (3, 4, 'Lunedì', 6),
+  (4, 4, 'Lunedì', 6),
+  (5, 4, 'Lunedì', 4),
+  (6, 5, 'Martedì', 10),
+  (7, 5, 'Martedì', 10),
+  (8, 5, 'Martedì', 10),
+  (9, 5, 'Martedì', 6),
+  (10, 6, 'Mercoledì', 6),
+  (11, 6, 'Mercoledì', 6),
+  (12, 6, 'Mercoledì', 8),
+  (13, 6, 'Mercoledì', 8),
+  (14, 7, 'Giovedì', 8),
+  (15, 7, 'Giovedì', 5),
+  (16, 1, 'Giovedì', 5),
+  (17, 1, 'Giovedì', 6),
+  (18, 1, 'Giovedì', 10),
+  (19, 1, 'Giovedì', 8),
+  (20, 8, 'Venerdì', 8),
+  (21, 8, 'Venerdì', 6),
+  (22, 8, 'Venerdì', 10),
+  (23, 2, 'Venerdì', 10),
+  (24, 2, 'Venerdì', 8),
+  (25, 2, 'Venerdì', 6),
+  (26, 3, 'Sabato', 6),
+  (27, 3, 'Sabato', 7),
+  (28, 3, 'Sabato', 9),
+  (29, 3, 'Sabato', 9),
+  (30, 9, 'Sabato', 7);
 
 -- Creazione e popolamento tabella Animale
 CREATE TABLE Animale (
-  Id_animale       VARCHAR(10) PRIMARY KEY,
-  Id_gabbia        VARCHAR(15) NOT NULL,
-  Nome_comune      VARCHAR(40) NOT NULL,
-  Nome_scientifico VARCHAR(40) NOT NULL,
-  Classe           VARCHAR(20) NOT NULL,
-  Ordine           VARCHAR(20) NOT NULL,
-  Famiglia         VARCHAR(20) NOT NULL,
-  Sesso            VARCHAR(1)  NOT NULL,
-  Eta              INTEGER(3)  NOT NULL,
-  Data_arrivo      DATE,
-  Data_nascita     DATE,
+  Id_animale   VARCHAR(10) PRIMARY KEY,
+  Id_gabbia    INTEGER(2)  NOT NULL,
+  Nome_comune  VARCHAR(40) NOT NULL,
+  Specie       VARCHAR(40) NOT NULL,
+  Classe       VARCHAR(20) NOT NULL,
+  Ordine       VARCHAR(20) NOT NULL,
+  Famiglia     VARCHAR(20) NOT NULL,
+  Sesso        VARCHAR(1)  NOT NULL,
+  Eta          INTEGER(3)  NOT NULL,
+  Data_arrivo  DATE,
+  Data_nascita DATE,
   FOREIGN KEY (Id_gabbia) REFERENCES Gabbia (Id_gabbia)
 );
 
-INSERT INTO Animale (Id_animale, Id_gabbia, Nome_comune, Nome_scientifico, Classe, Ordine, Famiglia, Sesso, Eta, Data_arrivo, Data_nascita)
+INSERT INTO Animale (Id_animale, Id_gabbia, Nome_comune, Specie, Classe, Ordine, Famiglia, Sesso, Eta, Data_arrivo, Data_nascita)
 VALUES
   ('HdTiQWoA9W', 1, 'Ghepardo', 'Acinonyx jubatus', 'Mammiferi ', 'Carnivori', 'Felidi', 'M', 10, '2009-01-04', NULL),
   ('MHJsAQyjgG', 2, 'Leone', 'Panthera Leo', 'Mammiferi', 'Carnivori', 'Felidi', 'F', 8, '2013-04-18', NULL),
@@ -240,6 +236,63 @@ VALUES
     '2015-08-20', NULL),
   ('J3O8iLozhO', 30, 'Ara ali verdi', 'Ara chloropterus', 'Uccelli', 'Psittaciformi', 'Psittacidi', 'M', 2, NULL,
     '2016-07-27');
+
+-- Creazione e popolamento tabella ControlloMedico
+CREATE TABLE ControlloMedico (
+  Id_animale     VARCHAR(10)   NOT NULL,
+  Id_veterinario VARCHAR(20)   NOT NULL,
+  Giorno         DATE          NOT NULL,
+  Peso           DECIMAL(5, 2) NOT NULL,
+  Malattia       INTEGER       NOT NULL,
+  FOREIGN KEY (Id_animale) REFERENCES Animale (Id_animale),
+  FOREIGN KEY (Id_veterinario) REFERENCES Dipendenti (Id_dipendente),
+  PRIMARY KEY (Id_animale, Giorno, Id_veterinario)
+);
+
+INSERT INTO ControlloMedico (Id_animale, Id_veterinario, Giorno, Peso, Malattia) VALUES
+  ('WbLcpsGLaf', 'Trcz73OHLQdTPjfucGb1', '2018-06-04', 1, 1),
+  ('eDTtjdNin5', 'Trcz73OHLQdTPjfucGb1', '2018-06-04', 0.6, 0),
+  ('kX5i77fSzA', 'Trcz73OHLQdTPjfucGb1', '2018-06-05', 0.8, 0),
+  ('HPIXIo1wks', 'Trcz73OHLQdTPjfucGb1', '2018-06-05', 1, 0),
+  ('HdTiQWoA9W', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-07', 46, 0),
+  ('MHJsAQyjgG', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-08', 150, 0),
+  ('MHJsAQyjgG', 'LxwhzFFLQ8wPdQgAW80o', '2018-03-20', 145, 0),
+  ('MHJsAQyjgG', 'LxwhzFFLQ8wPdQgAW80o', '2018-02-15', 143, 0),
+  ('MHJsAQyjgG', 'LxwhzFFLQ8wPdQgAW80o', '2018-02-05', 143, 1),
+  ('MHJsAQyjgG', 'LxwhzFFLQ8wPdQgAW80o', '2017-12-18', 140, 0),
+  ('MIcfKnp4jw', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-09', 76, 0),
+  ('SFSUCvPTVr', 'QjQMaljH5PthhdL2z970', '2018-05-18', 1600, 0),
+  ('84Y5MnUCTq', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-18', 7, 0),
+  ('2ctKyYVXlI', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-19', 3, 0),
+  ('hpMwkJvIve', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-20', 200, 0),
+  ('Q7m2kWM8Sd', 'Trcz73OHLQdTPjfucGb1', '2018-04-20', 5, 0),
+  ('bxvED46kas', 'Trcz73OHLQdTPjfucGb1', '2018-04-21', 6, 0),
+  ('3PJZtjcCJt', 'Trcz73OHLQdTPjfucGb1', '2018-04-22', 4, 0),
+  ('irO3Vltmml', 'Trcz73OHLQdTPjfucGb1', '2018-04-23', 0.5, 0),
+  ('jtFscxRO5t', 'QjQMaljH5PthhdL2z970', '2018-04-24', 4, 0),
+  ('TbcP2i3xmO', 'QjQMaljH5PthhdL2z970', '2018-04-25', 10, 0),
+  ('jBFcSqp3BX', 'QjQMaljH5PthhdL2z970', '2018-04-26', 12, 0),
+  ('PH8ZfieJDX', 'Trcz73OHLQdTPjfucGb1', '2018-05-25', 11, 0),
+  ('vV3FcbzsLg', 'Trcz73OHLQdTPjfucGb1', '2018-05-26', 3, 0),
+  ('R753WCRVgU', 'LxwhzFFLQ8wPdQgAW80o', '2018-05-26', 2, 0),
+  ('F3qhgwfr10', 'Trcz73OHLQdTPjfucGb1', '2018-03-09', 120, 0),
+  ('GzXDREfWga', 'Trcz73OHLQdTPjfucGb1', '2018-03-10', 3, 0),
+  ('I3VA0OxptO', 'QjQMaljH5PthhdL2z970', '2018-03-10', 50, 0),
+  ('DclNtLzG7e', 'Trcz73OHLQdTPjfucGb1', '2018-03-12', 1.2, 0),
+  ('0sOzX0NdSz', 'Trcz73OHLQdTPjfucGb1', '2018-03-13', 600, 1),
+  ('AJbJGeeEDR', 'LxwhzFFLQ8wPdQgAW80o', '2018-03-12', 0.3, 0),
+  ('rs7Fq26XFs', 'Trcz73OHLQdTPjfucGb1', '2018-03-22', 4, 0),
+  ('Gkr0sTJObZ', 'Trcz73OHLQdTPjfucGb1', '2018-03-23', 30, 0),
+  ('5Jv2qjqfCw', 'Trcz73OHLQdTPjfucGb1', '2018-03-24', 2, 0),
+  ('dRa5fddNaf', 'QjQMaljH5PthhdL2z970', '2018-02-27', 0.5, 0),
+  ('BfK4NUmdHs', 'LxwhzFFLQ8wPdQgAW80o', '2018-02-26', 8, 0),
+  ('cJNP4BnoRo', 'LxwhzFFLQ8wPdQgAW80o', '2018-03-01', 15, 0),
+  ('axqHPe6ocq', 'LxwhzFFLQ8wPdQgAW80o', '2018-03-02', 37, 0),
+  ('UNjwm0Wygt', 'LxwhzFFLQ8wPdQgAW80o', '2018-03-03', 5, 0),
+  ('l81E5IQy3x', 'Trcz73OHLQdTPjfucGb1', '2018-06-01', 30, 0),
+  ('ZEmxJIAKi2', 'QjQMaljH5PthhdL2z970', '2018-06-05', 1, 1),
+  ('BajCeOxfQK', 'QjQMaljH5PthhdL2z970', '2018-06-05', 0.8, 0),
+  ('J3O8iLozhO', 'QjQMaljH5PthhdL2z970', '2018-06-05', 0.6, 0);
 
 -- Creazione e popolamento tabella Merce
 CREATE TABLE Merce (
