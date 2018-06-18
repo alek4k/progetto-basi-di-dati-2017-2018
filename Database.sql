@@ -17,15 +17,15 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Zoo;
 DROP TABLE IF EXISTS Orario;
 DROP TABLE IF EXISTS Biglietto;
-DROP TABLE IF EXISTS Visitatore;
+DROP TABLE IF EXISTS Tipologia_biglietto;
 DROP TABLE IF EXISTS Parcheggio;
-DROP TABLE IF EXISTS Dipendenti;
+DROP TABLE IF EXISTS Dipendente;
 DROP TABLE IF EXISTS Area;
 DROP TABLE IF EXISTS Gabbia;
 DROP TABLE IF EXISTS Animale;
-DROP TABLE IF EXISTS ControlloMedico;
+DROP TABLE IF EXISTS Controllo_medico;
 DROP TABLE IF EXISTS Merce;
-DROP TABLE IF EXISTS NegozioSouvenir;
+DROP TABLE IF EXISTS Negozio_souvenir;
 
 DELIMITER ;
 
@@ -57,16 +57,19 @@ INSERT INTO Orario (Giorno, Apertura, Chiusura) VALUES
   ('Sabato', '9:00', '18:00'),
   ('Domenica', '9:00', '19:00');
 
+-- Creazione e popolamento tabella Tipologia_biglietto
 CREATE TABLE Tipologia_biglietto (
   Nome   VARCHAR(10) PRIMARY KEY,
-  Prezzo DECIMAL(5, 2) NOT NULL
+  Prezzo DECIMAL(5, 2) NOT NULL,
+  Eta_min INTEGER(2) NOT NULL,
+  Eta_max INTEGER(2)
 );
 
-INSERT INTO Tipologia_biglietto (Nome, Prezzo) VALUES
-  ('Baby', 3.00),
-  ('Ragazzo', 15.00),
-  ('Adulto', 20.00),
-  ('Senior', 18.00);
+INSERT INTO Tipologia_biglietto (Nome, Prezzo, Eta_min, Eta_max) VALUES
+  ('Baby', 3.00, 0, 5),
+  ('Ragazzo', 15.00, 6, 12),
+  ('Adulto', 20.00, 13, 64),
+  ('Senior', 18.00, 65, NULL);
 
 -- Creazione e popolamento tabella Biglietto
 CREATE TABLE Biglietto (
@@ -88,8 +91,8 @@ INSERT INTO Biglietto (Id_biglietto, Tipologia, Giorno) VALUES
   ('AgldIAZrTbEQfuW', 'Ragazzo', '2018-06-01'),
   ('H28LwzbF2CTQgC2', 'Adulto', '2018-06-01');
 
--- Creazione e popolamento tabella Dipendenti
-CREATE TABLE Dipendenti (
+-- Creazione e popolamento tabella Dipendente
+CREATE TABLE Dipendente (
   Id_dipendente   VARCHAR(20) PRIMARY KEY,
   Impiego         ENUM ('Direttore', 'Keeper', 'Veterinario', 'Cassiere', 'Mascotte', 'Ricercatore') NOT NULL,
   Nome            VARCHAR(30)                                                                        NOT NULL,
@@ -98,7 +101,7 @@ CREATE TABLE Dipendenti (
   Salario         DECIMAL(6, 2) UNSIGNED
 );
 
-INSERT INTO Dipendenti (Id_dipendente, Impiego, Nome, Cognome, Data_assunzione, Salario) VALUES
+INSERT INTO Dipendente (Id_dipendente, Impiego, Nome, Cognome, Data_assunzione, Salario) VALUES
   ('oN95g4zNlVdHpdPU6TWa', 'Direttore', 'Mario', 'Lamborghini', NULL, 4000),
   ('CmqYEkmd0qZyc1fnbt7X', 'Keeper', 'Concetta', 'Leone', '2017-07-21', 2200),
   ('s2zeyv1pnEkcyMTNmthD', 'Keeper', 'Pasquale', 'Esposito', '2009-05-27', 2200),
@@ -135,7 +138,6 @@ INSERT INTO Area (Id_area, Nome) VALUES
 CREATE TABLE Gabbia (
   Id_gabbia      INTEGER(2) PRIMARY KEY,
   Id_area        INTEGER(2)  NOT NULL,
-  Id_animale     VARCHAR(10) NOT NULL,
   Giorno_pulizia VARCHAR(10) NOT NULL,
   Capienza       INTEGER(2)  NOT NULL,
   FOREIGN KEY (Id_area) REFERENCES Area (Id_area)
@@ -237,19 +239,19 @@ VALUES
   ('J3O8iLozhO', 30, 'Ara ali verdi', 'Ara chloropterus', 'Uccelli', 'Psittaciformi', 'Psittacidi', 'M', 2, NULL,
     '2016-07-27');
 
--- Creazione e popolamento tabella ControlloMedico
-CREATE TABLE ControlloMedico (
+-- Creazione e popolamento tabella Controllo_medico
+CREATE TABLE Controllo_medico (
   Id_animale     VARCHAR(10)   NOT NULL,
   Id_veterinario VARCHAR(20)   NOT NULL,
   Giorno         DATE          NOT NULL,
   Peso           DECIMAL(5, 2) NOT NULL,
   Malattia       INTEGER       NOT NULL,
   FOREIGN KEY (Id_animale) REFERENCES Animale (Id_animale),
-  FOREIGN KEY (Id_veterinario) REFERENCES Dipendenti (Id_dipendente),
+  FOREIGN KEY (Id_veterinario) REFERENCES Dipendente (Id_dipendente),
   PRIMARY KEY (Id_animale, Giorno, Id_veterinario)
 );
 
-INSERT INTO ControlloMedico (Id_animale, Id_veterinario, Giorno, Peso, Malattia) VALUES
+INSERT INTO Controllo_medico (Id_animale, Id_veterinario, Giorno, Peso, Malattia) VALUES
   ('WbLcpsGLaf', 'Trcz73OHLQdTPjfucGb1', '2018-06-04', 1, 1),
   ('eDTtjdNin5', 'Trcz73OHLQdTPjfucGb1', '2018-06-04', 0.6, 0),
   ('kX5i77fSzA', 'Trcz73OHLQdTPjfucGb1', '2018-06-05', 0.8, 0),
@@ -316,14 +318,14 @@ INSERT INTO Merce (Id_merce, Prezzo, Tipo) VALUES
   ('i5JbdlAqGO', 1.50, 'matita'),
   ('578JFaG5eI', 2.50, 'penna');
 
--- Creazione e popolamento tabella NegozioSouvenir
-CREATE TABLE NegozioSouvenir (
+-- Creazione e popolamento tabella Negozio_souvenir
+CREATE TABLE Negozio_souvenir (
   Id_merce VARCHAR(10) NOT NULL,
   Quantita INTEGER(3),
   FOREIGN KEY (Id_merce) REFERENCES Merce (Id_merce)
 );
 
-INSERT INTO NegozioSouvenir (Id_merce, Quantita) VALUES
+INSERT INTO Negozio_souvenir (Id_merce, Quantita) VALUES
   ('YTp4J4jhrd', 52),
   ('uQQMbQ67VE', 28),
   ('bG9S9RPgFb', 37),
