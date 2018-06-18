@@ -89,7 +89,9 @@ INSERT INTO Biglietto (Id_biglietto, Tipologia, Giorno) VALUES
   ('gAlaV138wek4mFN', 'Ragazzo', '2018-06-01'),
   ('vOPm5vqoNj2PXha', 'Senior', '2018-06-01'),
   ('AgldIAZrTbEQfuW', 'Ragazzo', '2018-06-01'),
-  ('H28LwzbF2CTQgC2', 'Adulto', '2018-06-01');
+  ('H28LwzbF2CTQgC2', 'Adulto', '2018-06-01'),
+  ('EpldIAZrTcEQQqq', 'Ragazzo', '2017-12-01'),
+  ('G29FPzbFFC2Q3C2', 'Adulto', '2017-12-01');
 
 -- Creazione e popolamento tabella Dipendente
 CREATE TABLE Dipendente (
@@ -120,19 +122,20 @@ INSERT INTO Dipendente (Id_dipendente, Impiego, Nome, Cognome, Data_assunzione, 
 -- Creazione e popolamento tabella Area
 CREATE TABLE Area (
   Id_area INTEGER(2) PRIMARY KEY,
+  N_gabbie INTEGER(2) NOT NULL,
   Nome    ENUM ('Europa', 'Madagascar', 'Oceania', 'Africa', 'Asia', 'America', 'Borealia', 'Rettilario', 'Amazzonia') NOT NULL
 );
 
-INSERT INTO Area (Id_area, Nome) VALUES
-  (1, 'Europa'),
-  (2, 'Madagascar'),
-  (3, 'Oceania'),
-  (4, 'Africa'),
-  (5, 'Asia'),
-  (6, 'America'),
-  (7, 'Borealia'),
-  (8, 'Rettilario'),
-  (9, 'Amazzonia');
+INSERT INTO Area (Id_area, Nome, N_gabbie) VALUES
+  (1, 'Europa', 4),
+  (2, 'Madagascar', 3),
+  (3, 'Oceania', 4),
+  (4, 'Africa', 5),
+  (5, 'Asia', 4),
+  (6, 'America', 4),
+  (7, 'Borealia', 2),
+  (8, 'Rettilario', 3),
+  (9, 'Amazzonia', 1);
 
 -- Creazione e popolamento tabella Gabbia
 CREATE TABLE Gabbia (
@@ -140,40 +143,41 @@ CREATE TABLE Gabbia (
   Id_area        INTEGER(2)  NOT NULL,
   Giorno_pulizia VARCHAR(10) NOT NULL,
   Capienza       INTEGER(2)  NOT NULL,
+  N_animali      INTEGER(2)  NOT NULL,
   FOREIGN KEY (Id_area) REFERENCES Area (Id_area)
 );
 
-INSERT INTO Gabbia (Id_gabbia, Id_area, Giorno_pulizia, Capienza) VALUES
-  (1, 4, 'Lunedì', 6),
-  (2, 4, 'Lunedì', 8),
-  (3, 4, 'Lunedì', 6),
-  (4, 4, 'Lunedì', 6),
-  (5, 4, 'Lunedì', 4),
-  (6, 5, 'Martedì', 10),
-  (7, 5, 'Martedì', 10),
-  (8, 5, 'Martedì', 10),
-  (9, 5, 'Martedì', 6),
-  (10, 6, 'Mercoledì', 6),
-  (11, 6, 'Mercoledì', 6),
-  (12, 6, 'Mercoledì', 8),
-  (13, 6, 'Mercoledì', 8),
-  (14, 7, 'Giovedì', 8),
-  (15, 7, 'Giovedì', 5),
-  (16, 1, 'Giovedì', 5),
-  (17, 1, 'Giovedì', 6),
-  (18, 1, 'Giovedì', 10),
-  (19, 1, 'Giovedì', 8),
-  (20, 8, 'Venerdì', 8),
-  (21, 8, 'Venerdì', 6),
-  (22, 8, 'Venerdì', 10),
-  (23, 2, 'Venerdì', 10),
-  (24, 2, 'Venerdì', 8),
-  (25, 2, 'Venerdì', 6),
-  (26, 3, 'Sabato', 6),
-  (27, 3, 'Sabato', 7),
-  (28, 3, 'Sabato', 9),
-  (29, 3, 'Sabato', 9),
-  (30, 9, 'Sabato', 7);
+INSERT INTO Gabbia (Id_gabbia, Id_area, Giorno_pulizia, Capienza, N_animali) VALUES
+  (1, 4, 'Lunedì', 6, 1),
+  (2, 4, 'Lunedì', 8, 1),
+  (3, 4, 'Lunedì', 4, 4),
+  (4, 4, 'Lunedì', 6, 1),
+  (5, 4, 'Lunedì', 4, 1),
+  (6, 5, 'Martedì', 10, 1),
+  (7, 5, 'Martedì', 10, 1),
+  (8, 5, 'Martedì', 10, 1),
+  (9, 5, 'Martedì', 6, 3),
+  (10, 6, 'Mercoledì', 6, 1),
+  (11, 6, 'Mercoledì', 6, 1),
+  (12, 6, 'Mercoledì', 8, 3),
+  (13, 6, 'Mercoledì', 8, 1),
+  (14, 7, 'Giovedì', 8, 1),
+  (15, 7, 'Giovedì', 5, 1),
+  (16, 1, 'Giovedì', 5, 1),
+  (17, 1, 'Giovedì', 6, 1),
+  (18, 1, 'Giovedì', 10, 1),
+  (19, 1, 'Giovedì', 8, 1),
+  (20, 8, 'Venerdì', 8, 1),
+  (21, 8, 'Venerdì', 6, 1),
+  (22, 8, 'Venerdì', 10, 1),
+  (23, 2, 'Venerdì', 10, 1),
+  (24, 2, 'Venerdì', 8, 1),
+  (25, 2, 'Venerdì', 6, 1),
+  (26, 3, 'Sabato', 6, 1),
+  (27, 3, 'Sabato', 7, 1),
+  (28, 3, 'Sabato', 9, 1),
+  (29, 3, 'Sabato', 9, 1),
+  (30, 9, 'Sabato', 7, 3);
 
 -- Creazione e popolamento tabella Animale
 CREATE TABLE Animale (
@@ -339,3 +343,119 @@ INSERT INTO Negozio_souvenir (Id_merce, Quantita) VALUES
   ('ucnzo5hWst', 114),
   ('i5JbdlAqGO', 200),
   ('578JFaG5eI', 160);
+
+
+DROP FUNCTION IF EXISTS ControlliEseguiti;
+
+DELIMITER $$
+CREATE FUNCTION ControlliEseguiti(inizio DATE, fine DATE, veterinario VARCHAR(20)) RETURNS int(10) unsigned
+BEGIN
+DECLARE n_controlli INTEGER;
+SELECT COUNT(*) INTO n_controlli FROM Controllo_medico WHERE Id_veterinario = veterinario AND Giorno BETWEEN inizio AND fine;
+RETURN n_controlli;
+END$$
+DELIMITER ;
+
+
+DROP FUNCTION IF EXISTS Malattia;
+
+DELIMITER $$
+CREATE FUNCTION Malattia(animale VARCHAR(10)) RETURNS int(11)
+BEGIN
+DECLARE malattia INTEGER;
+SELECT c1.Malattia INTO malattia FROM Controllo_medico AS c1 JOIN(
+    SELECT MAX(Giorno) AS MaxCheckData, Id_animale
+    FROM Controllo_medico
+    WHERE Id_animale = animale
+) AS c2
+ON c1.Id_animale = c2.Id_animale
+AND c1.Giorno = c2.MaxCheckData;
+RETURN malattia;
+END$$
+DELIMITER ;
+
+
+DROP VIEW IF EXISTS AnimaliMalati;
+
+CREATE VIEW AnimaliMalati AS SELECT Id_animale, Giorno FROM Controllo_medico WHERE Malattia(Controllo_medico.Id_animale) = 1;
+
+
+DROP PROCEDURE IF EXISTS DeleteLog;
+
+DELIMITER $$
+CREATE PROCEDURE DeleteLog(anno INT(4) UNSIGNED)
+BEGIN
+DELETE FROM Biglietto WHERE YEAR(Giorno) = anno;
+DELETE FROM Controllo_medico WHERE YEAR(Giorno) = anno;
+END$$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS Scorte;
+
+DELIMITER $$
+CREATE PROCEDURE Scorte(scorta INT(3) UNSIGNED)
+BEGIN
+SELECT Negozio_souvenir.Id_merce, Prezzo, Tipo, Quantita as Rimanenti FROM Negozio_souvenir, Merce WHERE Negozio_souvenir.Id_merce = Merce.Id_merce AND Quantita < scorta;
+END$$
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS BloccoDuplicatoBiglietto;
+
+DELIMITER //
+CREATE TRIGGER BloccoDuplicatoBiglietto
+BEFORE INSERT ON Biglietto
+FOR EACH ROW
+BEGIN
+DECLARE msg VARCHAR(255);
+IF (EXISTS(SELECT 1 FROM Biglietto WHERE Id_biglietto = NEW.Id_biglietto)) THEN
+SET msg = "Errore: id biglietto già esistente. Generare un altro id.";
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+END IF;
+END //
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS ErratoInserimentoAnimale;
+
+DELIMITER //
+CREATE TRIGGER ErratoInserimentoAnimale
+BEFORE INSERT ON Animale
+FOR EACH ROW
+BEGIN
+DECLARE msg VARCHAR(255);
+DECLARE num INTEGER;
+DECLARE capacita INTEGER;
+DECLARE specie_animale VARCHAR(50);
+SELECT Specie INTO specie_animale FROM Animale WHERE Animale.Id_gabbia = NEW.Id_gabbia LIMIT 1;
+SELECT N_animali INTO num FROM Gabbia WHERE Gabbia.Id_gabbia = NEW.Id_gabbia;
+SELECT Capienza INTO capacita FROM Gabbia WHERE Gabbia.Id_gabbia = NEW.Id_gabbia;
+IF (EXISTS(SELECT 1 FROM Animale WHERE Id_animale = NEW.Id_animale)) THEN
+SET msg = "Errore: id animale già esistente. Generare un altro id.";
+END IF;
+IF (NEW.Data_arrivo IS NOT NULL AND NEW.Data_nascita IS NOT NULL) THEN
+SET msg = "Errore: inserire solamente data di nascita o data di arrivo nello zoo.";
+END IF;
+IF capacita = num THEN
+SET msg = "Errore: non c'è posto nella gabbia per il nuovo animale. Selezionare un'altra gabbia.";
+END IF;
+IF (specie_animale != NEW.Specie) THEN
+SET msg = "Errore: Nella gabbia sono presenti animali di un'altra specie. Selezionare un'altra gabbia.";
+END IF;
+SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+END //
+DELIMITER ;
+
+
+DROP TRIGGER IF EXISTS UpdateNumeroAnimali;
+
+DELIMITER //
+CREATE TRIGGER UpdateNumeroAnimali
+AFTER INSERT ON Animale
+FOR EACH ROW
+BEGIN
+DECLARE num INTEGER;
+UPDATE Gabbia SET N_animali = N_animali + 1 WHERE Gabbia.Id_gabbia = NEW.Id_gabbia;
+END //
+DELIMITER ;
