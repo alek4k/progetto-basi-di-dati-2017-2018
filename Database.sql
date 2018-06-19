@@ -1,6 +1,6 @@
 /*
   ***************************************************
-  *  PROGETTO BASI DI DATI "TropicalZoo"            *
+  *  PROGETTO BASI DI DATI "Tropical Zoo"           *
   ***************************************************
   *  Anno 2017-2018                                 *
   *  Università degli Studi di Padova               *
